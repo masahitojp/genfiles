@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
 
+	"github.com/spf13/afero"
 	"github.com/stoewer/go-strcase"
 )
 
@@ -22,8 +22,9 @@ func main() {
 	fileName := flag.Args()[0]
 	snake := ToSnakeCase(fileName)
 
-	MakeEmptyFile(MakeFileName(*srcDir, snake, *fileExtention))
-	MakeEmptyFile(MakeFileName(*testDir, "test_"+snake, *fileExtention))
+	AppFs := afero.NewOsFs()
+	MakeEmptyFile(AppFs, MakeFileName(*srcDir, snake, *fileExtention))
+	MakeEmptyFile(AppFs, MakeFileName(*testDir, "test_"+snake, *fileExtention))
 
 }
 
@@ -34,8 +35,8 @@ func ToSnakeCase(s string) string {
 
 // MakeEmptyFile is a ...
 // https://www.golangprograms.com/create-an-empty-file.html
-func MakeEmptyFile(s string) {
-	emptyFile, err := os.Create(s)
+func MakeEmptyFile(fs afero.Fs, s string) {
+	emptyFile, err := fs.Create(s)
 	if err != nil {
 		log.Fatal(err)
 	}
