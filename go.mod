@@ -1,4 +1,4 @@
-module github.com/masahitojp/mkfs
+module github.com/masahitojp/genfiles
 
 go 1.16
 
