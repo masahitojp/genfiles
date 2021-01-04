@@ -25,7 +25,7 @@ func TestMakeFileName(t *testing.T) {
 	assert(t, MakeFileName("src", "main", "go"), "src/main.go")
 }
 
-func assert(t *testing.T, actual interface{}, expected interface{}) {
+func assert(t *testing.T, actual, expected interface{}) {
 	if actual != expected {
 		t.Errorf("got: %v\nwant: %v", actual, expected)
 	}

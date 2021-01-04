@@ -12,7 +12,7 @@ import (
 func main() {
 	srcDir := flag.String("srcDir", "main", "D to store the source files")
 	testDir := flag.String("testDir", "tests", "File to store the unit tests files")
-	fileExtention := flag.String("fileExtention", "py", "file extention")
+	fileExtension := flag.String("fileExtention", "py", "file extension")
 
 	flag.Parse()
 	if len(flag.Args()) == 0 {
@@ -23,8 +23,8 @@ func main() {
 	snake := ToSnakeCase(fileName)
 
 	AppFs := afero.NewOsFs()
-	MakeEmptyFile(AppFs, MakeFileName(*srcDir, snake, *fileExtention))
-	MakeEmptyFile(AppFs, MakeFileName(*testDir, "test_"+snake, *fileExtention))
+	MakeEmptyFile(AppFs, MakeFileName(*srcDir, snake, *fileExtension))
+	MakeEmptyFile(AppFs, MakeFileName(*testDir, "test_"+snake, *fileExtension))
 
 }
 
@@ -44,6 +44,6 @@ func MakeEmptyFile(fs afero.Fs, s string) {
 }
 
 // MakeFileName is a ...
-func MakeFileName(dir string, fileName string, fileExtention string) string {
+func MakeFileName(dir, fileName, fileExtention string) string {
 	return fmt.Sprintf("%s/%s.%s", dir, fileName, fileExtention)
 }

@@ -1,9 +1,7 @@
 genfiles
 ========
 
-[![Test Status](https://github.com/masahitojp/genfiles/workflows/test/badge.svg?branch=master)][actions]
-
-[actions]: https://github.com/masahitojp/genfiles/actions?workflow=test
+![test](https://github.com/masahitojp/genfiles/workflows/test/badge.svg?branch=main)
 
 ## Description
 
