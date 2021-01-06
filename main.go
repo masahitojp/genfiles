@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	srcDir := flag.String("srcDir", "main", "D to store the source files")
+	srcDir := flag.String("srcDir", "main", "File to store the source files")
 	testDir := flag.String("testDir", "tests", "File to store the unit tests files")
 	fileExtension := flag.String("fileExtention", "py", "file extension")
 
@@ -22,10 +22,15 @@ func main() {
 	fileName := flag.Args()[0]
 	snake := ToSnakeCase(fileName)
 
+	fileNames := []string{
+		MakeFileName(*srcDir, snake, *fileExtension),
+		MakeFileName(*testDir, "test_"+snake, *fileExtension),
+	}
 	AppFs := afero.NewOsFs()
-	MakeEmptyFile(AppFs, MakeFileName(*srcDir, snake, *fileExtension))
-	MakeEmptyFile(AppFs, MakeFileName(*testDir, "test_"+snake, *fileExtension))
-
+	for _, fileName := range fileNames {
+		MakeEmptyFile(AppFs, fileName)
+		fmt.Println("created: " + fileName)
+	}
 }
 
 // ToSnakeCase is a base function
