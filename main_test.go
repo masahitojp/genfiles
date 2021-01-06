@@ -21,6 +21,25 @@ func TestMakeEmptyFile(t *testing.T) {
 	assert(t, string(bytes), "")
 }
 
+func TestMakeEmptyFileAndCreateDir(t *testing.T) {
+	AppFs := afero.NewMemMapFs()
+	fileName := "path/to/test.py"
+
+	MakeEmptyFile(AppFs, fileName)
+
+	// file exists
+	exists, _ := afero.Exists(AppFs, fileName)
+	assert(t, exists, true)
+
+	// directory exists
+	existsDir, _ := afero.DirExists(AppFs, "path/to")
+	assert(t, existsDir, true)
+
+	// file is empty
+	bytes, _ := afero.ReadFile(AppFs, fileName)
+	assert(t, string(bytes), "")
+}
+
 func TestMakeFileName(t *testing.T) {
 	assert(t, MakeFileName("src", "main", "go"), "src/main.go")
 }

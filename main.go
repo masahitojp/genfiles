@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/spf13/afero"
 	"github.com/stoewer/go-strcase"
@@ -41,6 +43,14 @@ func ToSnakeCase(s string) string {
 // MakeEmptyFile is a ...
 // https://www.golangprograms.com/create-an-empty-file.html
 func MakeEmptyFile(fs afero.Fs, s string) {
+	dirName := filepath.Dir(s)
+	exists, err := afero.DirExists(fs, dirName)
+	if !exists && err != nil {
+		mkdirErr := fs.MkdirAll(dirName, os.ModePerm)
+		if err != nil {
+			log.Fatal(mkdirErr)
+		}
+	}
 	emptyFile, err := fs.Create(s)
 	if err != nil {
 		log.Fatal(err)
